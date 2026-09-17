@@ -11,6 +11,7 @@ tags:
 authors:
   # Collaborators: please add, correct or remove your own entry (name, ORCID, affiliation, role).
   - name: Akira R. Kinjo
+    orcid: 0000-0002-4006-8208
     affiliation: 1
     role: Conceptualization, Software, Data curation, Writing – original draft
   - name: Kozo Nishida

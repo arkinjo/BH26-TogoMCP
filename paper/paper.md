@@ -61,19 +61,21 @@ TogoMCP is a Model Context Protocol (MCP) server that lets large language model 
 query life-science knowledge graphs in SPARQL, guided by per-database schema documents called
 MIE (Metadata Interoperability Exchange) files. During the DBCLS BioHackathon 2026 (BH26), the
 TogoMCP group set out to extend the server, refine the MIE files, add databases, learn what makes
-a good SPARQL example, and turn use cases into reusable agent skills. In the first four days of the event we
-published seven releases (v2.12.2 to v2.17.0) and grew the catalogue from 37 to 43 databases: Fanta.bio,
-WikiPathways, IDSM, PubCaseFinder, LIPID MAPS and SwissLipids. Four of them are served from
-endpoints outside RDF Portal, and they broke assumptions the rest of the corpus had taught, such as
-named-graph pinning, federation with `SERVICE`, and literal typing. For the first time, MIE files
-were written by a second author. We made every worked example in the MIE corpus (now 398) assert
+a good SPARQL example, and turn use cases into reusable agent skills. In the first five days of the event we
+published eight releases (v2.12.2 to v2.18.0) and grew the catalogue from 37 to 44 databases: Fanta.bio,
+WikiPathways, IDSM, PubCaseFinder, LIPID MAPS and SwissLipids, plus BH26 Microbes, an experimental
+dataset of KEGG Orthology assignments for 57.6 million prokaryotic proteins built for the BioHackathon.
+Four of them are served from endpoints outside RDF Portal and one from a QLever engine rather than
+Virtuoso, and they broke assumptions the rest of the corpus had taught, such as named-graph pinning,
+federation with `SERVICE`, and literal typing. For the first time, MIE files
+were written by a second author. We made every worked example in the MIE corpus (now 407) assert
 its recorded result against the live endpoint in continuous integration. The first full comparison
 found drift that execution-only checks had missed, most seriously a NANDO release that made an
 example join silently miss about 88% of mapped diseases. Onboarding the new databases uncovered a
 series of quantified "silent wrong answers", queries that return plausible results rather than errors,
 including a category count inflated 3.1-fold by an upstream data defect. We also added two
-PubCaseFinder tools for phenotype-driven rare-disease diagnosis support, fixed failure modes found
-in production call logs, made TogoID errors suggest working conversion routes, and prepared a
+PubCaseFinder tools for phenotype-driven rare-disease diagnosis support, began serving analysis
+workflows (agent skills) from the server, fixed failure modes found in production call logs, made TogoID errors suggest working conversion routes, and prepared a
 LOTUS natural-products graph for hosting on RDF Portal. We argue that for LLM-facing schema
 documentation, "the example still runs" is not evidence that it is still correct.
 
@@ -107,14 +109,14 @@ This report describes what we did toward each objective between 13 and 19 Septem
 we learned about keeping LLM-facing schema documentation correct as the set of databases, endpoints
 and authors grows.
 
-# Six new databases
+# New databases
 
 Table 1 summarises the databases added during the week. Each was onboarded the same way: a row in
 the endpoint registry, an MIE file with live-verified examples and documented traps ("gotchas"), and a
 review pull request. Falsifiable claims carry a `check:` block that can be re-run against the endpoint.
 
-Table: Databases added during BH26. CRE, cis-regulatory element; HPO, Human Phenotype Ontology.
-Counts are as measured when each MIE was verified.
+Table: Databases added during BH26. CRE, cis-regulatory element; HPO, Human Phenotype Ontology;
+KO, KEGG Orthology. Counts are as measured when each MIE was verified.
 
 | Database (release) | Content | Endpoint | Notable for agents |
 |---|---|---|---|
@@ -124,6 +126,7 @@ Counts are as measured when each MIE was verified.
 | PubCaseFinder (2.15.0) | 18,375 OMIM/Orphanet diseases, 379,263 HPO annotations | RDF Portal `primary` | only Japanese HPO and disease labels |
 | LIPID MAPS (2.15.0) | 52,175 classified lipids, shorthand such as `PC 34:1` | lipidmaps.org, behind a WAF | no named graphs; inverted `subClassOf` |
 | SwissLipids (2.16.0) | 777,965 lipids with sn-position composition | SIB | upstream ID-mapping examples return 0 rows |
+| BH26 Microbes (after 2.18.0; experimental) | KofamScan KO assignments for 57.6M RefSeq proteins in 23,434 prokaryotic genomes | RDF Portal `microbes` (QLever) | 24% of hits below threshold; no organism names |
 
 ## What each database adds
 
@@ -143,10 +146,28 @@ lipidomics shorthand used in result tables (34,567 structures map onto 6,988 sho
 **SwissLipids** [@citesAsDataSource:Aimo2015swisslipids] is the only one that records which fatty acid
 occupies which sn-position, so "lipids with palmitate at sn-1" becomes a structured query.
 
-## Endpoints outside RDF Portal
+## An experimental BioHackathon dataset
 
-Four of the six databases are served from their maintainers' own endpoints. These endpoints exposed
-habits that the RDF Portal-hosted corpus had taught agents and authors:
+**BH26 Microbes** (`bh26microbes`) was built for this BioHackathon and has not yet been publicly
+announced. [TODO: credit the group or people who produced and loaded the dataset.] It holds KofamScan
+[@usesMethodIn:Aramaki2020kofamkoala] KEGG Orthology (KO) assignments, each with its HMM score,
+E-value, profile threshold and significance, for 57,612,257 RefSeq
+[@citesAsDataSource:OLeary2016refseq] proteins across 23,434 prokaryotic genome assemblies. It is the
+only source in the catalogue that answers "which genomes encode function X" from gene content: 2,246
+genomes carry a significant hit to the nitrogenase iron protein NifH (K02588), and 1,839 carry both NifH
+and the MoFe protein alpha chain NifD (K02586). Because the dataset may still change shape or be
+withdrawn, the MIE and the Usage Guide catalogue mark it as experimental, and it is deliberately left
+off the public introduction page. Genomes and proteins carry no names or taxonomy on this endpoint.
+The MIE therefore resolves organisms by rewriting each RefSeq assembly accession (GCF) to its paired
+GenBank accession (GCA) and matching UniProt proteomes over `SERVICE`, and resolves proteins to
+UniProtKB by rewriting the RefSeq protein IRI into UniProt's form. All nine examples pass their result
+assertions, and all eight gotcha checks pass against the live endpoint.
+
+## Endpoints outside RDF Portal's Virtuoso
+
+Four of the seven databases are served from their maintainers' own endpoints, and BH26 Microbes is
+served by RDF Portal from a QLever [@citesAsRelated:Bast2017qlever] instance rather than Virtuoso.
+These endpoints exposed habits that the Virtuoso-hosted corpus had taught agents and authors:
 
 * **Graph pinning.** TogoMCP's guidance is to pin every query to a named graph, because co-hosted
   graphs re-declare shared ontology classes. LIPID MAPS has no named graphs, so a pinned query returns
@@ -157,7 +178,11 @@ habits that the RDF Portal-hosted corpus had taught agents and authors:
 * **Engine semantics.** A Virtuoso behaviour documented across the corpus (plain and `xsd:string`
   literals do not match each other) does not apply to IDSM's PostgreSQL-based engine. Re-testing the
   two-argument `REGEX()` bug showed it on WikiPathways but not on IDSM, so it holds on 11 of 12 endpoints
-  rather than "every endpoint".
+  rather than "every endpoint". QLever, behind BH26 Microbes, rejects a query that uses any undeclared
+  prefix (even `rdf:`), returns 0 rows without error for Virtuoso's `bif:contains` text search, and
+  matches string literals only in plain form although `DATATYPE()` reports `xsd:string`. It also caps
+  memory per query, so a `VALUES` join over several KOs can abort where a `UNION` of constant-bound
+  branches runs about ten times faster.
 * **Web application firewall (WAF).** The LIPID MAPS endpoint sits behind Cloudflare, which rejects
   legal SPARQL with HTTP 403 whenever the raw request body matches `\b(substr|concat|char)\(`, even
   inside a string literal. `GROUP_CONCAT(` passes because the underscore defeats the word boundary, and
@@ -266,6 +291,10 @@ Table: Queries that return plausible but wrong results, found during BH26.
 | PubCaseFinder | article-to-MeSH predicate minted as `fabiohasSubjectTerm` | correctly spelled predicate finds nothing | use the IRI as minted |
 | Fanta.bio | chromosome IRI form differs from HCO | IRI join returns 0 rows | join on strings |
 | NANDO | release moved MONDO mappings to `skos:exactMatch` | ~88% of mapped diseases missed | query both predicates |
+| BH26 Microbes | `rdfs:seeAlso` protein-to-KO links include the 24.1% of hits KofamScan marks not significant | 2,292 instead of 2,246 genomes for NifH; ×1.07 KO pairs for *E. coli* K-12 | require `significant = true` on the reified hit |
+| BH26 Microbes | one identical hit statement per genome that shares a protein | ×1.033 hits overall | count distinct proteins or genomes |
+| BH26 Microbes | Virtuoso `bif:contains` sent to QLever | 0 rows, no error | `FILTER(CONTAINS(LCASE(...)))` on KO definitions |
+| TogoID and BH26 Microbes | RefSeq-to-UniProt conversion | RecA (NP_417179) maps only to A0A485JBB4, not Swiss-Prot P0A7G6 | rewrite the RefSeq IRI and join UniProt over `SERVICE` |
 
 The LIPID MAPS findings began with an audit of the new MIE that K.N. carried out with Claude, which
 was followed up in review ([dbcls/togomcp#231](https://github.com/dbcls/togomcp/pull/231)). The label
@@ -273,6 +302,11 @@ trap is structural rather than a data defect: every lipid carries a systematic n
 abbreviation, and the class noun a biologist would type appears in neither. PGE2 has two labels, and
 neither contains "prostaglandin". Two routes that should agree (headgroup shorthand and the category
 tree) give the same 1,306 cardiolipins, so each checks the other.
+
+The BH26 Microbes traps show that the pattern holds even for a dataset built during the week itself. The
+most natural query, following the direct protein-to-KO link, over-annotates because the link is asserted
+for every KofamScan hit, including those below the KO's adaptive score threshold; only the reified hit
+records which hits KofamScan accepted.
 
 # Rare-disease diagnosis support with PubCaseFinder
 
@@ -352,7 +386,7 @@ the converter emits a property the vocabulary does not define.
 # Community, use cases and skills
 
 **A second MIE author.** K.N. became the first person other than A.R.K. to write MIE files, contributing
-four of the six new databases (WikiPathways, IDSM, LIPID MAPS and SwissLipids) with the `mie-generator`
+four of the seven new databases (WikiPathways, IDSM, LIPID MAPS and SwissLipids) with the `mie-generator`
 skill, the MIE specification and the CI checkers. Review still caught errors that tooling could not,
 such as an example that named the wrong endpoint and would have returned 0 rows if followed literally.
 [TODO: K.N.'s account of the process: time per database, and what the skill and specification did not
@@ -364,13 +398,19 @@ general improvements, and use cases where an MCP-based approach makes sense comp
 
 **Skills.** At the mid-term report we showed the `research-article-analysis` skill, which validates a
 paper's claims about compounds, reactions, pathways and protein functions against ChEBI, Rhea, UniProt,
-Reactome and GO instead of trusting the paper's text. Such skills currently have to be installed on each
-client. We began implementing `get_workflow`, which serves the public skills (`prism`,
-`research-article-analysis` and `disease-analysis`) from the server, both as a tool for hosts that only
-call tools and as `skill://` resources in anticipation of the skills extension proposed for MCP
-(SEP-2640). Serving skills centrally means that fast-changing facts inside them, of the same kind as MIE
-gotchas, are corrected for every user at once. Developer-facing skills (`mie-generator`, `qa-generator`)
-stay private. [TODO: update with the state on 19 September.]
+Reactome and GO instead of trusting the paper's text. Such skills used to be installed on each client,
+so a fix reached nobody who already had a copy, and hosts whose models only call tools could not use
+them at all. Release 2.18.0 serves the public skills (`prism`, `research-article-analysis` and
+`disease-analysis`) from the server through two routes that read one directory: a `get_workflow` tool,
+which lists the workflows, returns a workflow's `SKILL.md` with its file list and content digest, or
+returns one of its reference files; and `skill://` resources for hosts that read skills over MCP, in
+anticipation of the skills extension proposed for MCP (SEP-2640), which the FastMCP versions we use do
+not yet implement. Because the tool route has no description-based skill triggering, the Usage Guide
+gained a Workflows section generated from the same registry; this also reaches clients whose cached
+tool list does not yet show `get_workflow`. Serving skills centrally means that fast-changing facts
+inside them, of the same kind as MIE gotchas, are corrected for every user at once. Developer-facing
+skills (`mie-generator`, `qa-generator`) are reachable by neither route. The handbook and tutorial now
+tell readers that the skills come with the connection, so local installation is optional.
 
 [TODO: contributions of other group members (use cases, database proposals, testing, SPARQL example
 review).]
@@ -383,11 +423,11 @@ Table: Objectives of the TogoMCP group and corresponding outcomes.
 
 | Objective | Outcome |
 |---|---|
-| Extend and enhance TogoMCP | 7 releases; PubCaseFinder tools; TogoID route suggestions; log-driven fixes |
-| Examine and refine MIE files | result assertions over 398 examples; NANDO, GO, ChEBI, UniProt and LIPID MAPS corrections |
-| Use cases and workflows into skills | `research-article-analysis` demonstration; server-side skill delivery in progress |
+| Extend and enhance TogoMCP | 8 releases; PubCaseFinder tools; TogoID route suggestions; server-side workflows; log-driven fixes |
+| Examine and refine MIE files | result assertions over 407 examples; NANDO, GO, ChEBI, UniProt and LIPID MAPS corrections |
+| Use cases and workflows into skills | `research-article-analysis` demonstration; three public workflows served by `get_workflow` (2.18.0) |
 | How to make good SPARQL examples | see below |
-| Add new databases | 37 to 43 databases, 4 on external endpoints; LOTUS conversion prepared |
+| Add new databases | 37 to 44 databases (one an experimental BH26 dataset), 4 on external endpoints and 1 on QLever; LOTUS conversion prepared |
 
 **Onboarding cost lies in traps, not YAML.** Writing an MIE file is quick; finding out where a database
 returns a plausible wrong answer is not. Every trap in Table 2 would pass a test that only checks that
@@ -396,7 +436,7 @@ documentation survive upstream releases, as the NANDO case shows.
 
 **Rules learned on one platform do not transfer.** Guidance that was true across RDF Portal (pin the
 graph, federate with `SERVICE`, beware of literal typing) became endpoint-specific once databases
-arrived from other operators. Agent guidance should state the scope of each rule, and tools that
+arrived from other operators and other query engines. Agent guidance should state the scope of each rule, and tools that
 reason about queries, such as the empty-result probe, need the same care.
 
 **What makes a good SPARQL example.** From this week's practice, an example written for an LLM agent
@@ -416,21 +456,23 @@ SPARQL query guided by the MIE.
 **Limitations.** We did not re-run the TogoMCP benchmark on the enlarged catalogue during the week, so
 we cannot yet quantify the effect of the new databases or corrections on answer quality. The checks
 depend on live external endpoints, which are occasionally unavailable, and all figures are dated
-measurements that will drift.
+measurements that will drift. BH26 Microbes is experimental, so its figures may change with the dataset
+itself rather than with upstream releases.
 
 # Future work
 
-* Add benchmark questions that exercise the six new databases and re-run the evaluation.
+* Add benchmark questions that exercise the seven new databases and re-run the evaluation.
 * Host the LOTUS graph on RDF Portal, and report the upstream defects found in LIPID MAPS and other
   sources to their maintainers.
-* Release `get_workflow` and measure skill use from the call logs.
+* Measure use of `get_workflow` from the call logs.
+* Promote BH26 Microbes out of experimental status once the dataset's shape is settled.
 * Align MIE examples with community SPARQL example collections.
 * Onboard more MIE authors, and follow up databases proposed by participants and by neighbouring BH26
   groups that are building RDF or MCP interfaces. [TODO: keep only concrete follow-ups.]
 
 # Software and data availability
 
-* TogoMCP source code: <https://github.com/dbcls/togomcp> (releases v2.12.2 to v2.17.0; MIT License).
+* TogoMCP source code: <https://github.com/dbcls/togomcp> (releases v2.12.2 to v2.18.0, with BH26 Microbes merged after v2.18.0; MIT License).
 * Public TogoMCP server: <https://togomcp.rdfportal.org/>.
 * LOTUS converter and vocabulary: `scripts/lotus/` in the TogoMCP repository.
 * This report: <https://github.com/arkinjo/BH26-TogoMCP>.

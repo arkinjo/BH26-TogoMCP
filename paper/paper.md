@@ -15,19 +15,33 @@ authors:
     affiliation: 1
     role: Conceptualization, Software, Data curation, Writing – original draft
   - name: Kozo Nishida
-    affiliation: 99
+    affiliation: 5
     role: Data curation, Software, Validation
   - name: Shuichi Kawashima
+    orcid: 0000-0001-7883-3756
     affiliation: 2
+    role: Data curation, Resources
   - name: Yuki Moriya
+    orcid: 0000-0001-8195-5893
     affiliation: 2
   - name: Takatomo Fujisawa
+    orcid: 0000-0001-8978-3344
     affiliation: 3
   - name: Priscilla Joanne
-    affiliation: 99
-  - name: Julia Koblitz
+    affiliation: 6
+  - name: Yoko Okabeppu
     affiliation: 4
+    role: Data curation, Resources
+  - name: Shuya Ikeda
+    orcid: 0000-0002-1357-5159
+    affiliation: 2
+    role: Software, Resources
+  - name: Toyofumi Fujiwara
+    orcid: 0000-0002-0170-9172
+    affiliation: 2
+    role: Software, Resources
   - name: Yasunori Yamamoto
+    orcid: 0000-0002-6943-6887
     affiliation: 2
     role: Conceptualization, Resources, Writing – review & editing
 affiliations:
@@ -37,10 +51,12 @@ affiliations:
     index: 2
   - name: Bioinformation and DDBJ Center, National Institute of Genetics, Research Organization of Information and Systems, Mishima, Japan
     index: 3
-  - name: Leibniz Institute DSMZ, Braunschweig, Germany
+  - name: OKBP, Inc., Yokohama, Japan
     index: 4
-  - name: "[TO BE CONFIRMED]"
-    index: 99
+  - name: RIKEN Center for Biosystems Dynamics Research, Japan
+    index: 5
+  - name: Department of Computational Biology and Medical Sciences, Graduate School of Frontier Sciences, The University of Tokyo, Japan
+    index: 6
 date: 19 September 2026
 cito-bibliography: paper.bib
 event: BH26JP
@@ -148,8 +164,8 @@ occupies which sn-position, so "lipids with palmitate at sn-1" becomes a structu
 
 ## An experimental BioHackathon dataset
 
-**BH26 Microbes** (`bh26microbes`) was built for this BioHackathon and has not yet been publicly
-announced. [TODO: credit the group or people who produced and loaded the dataset.] It holds KofamScan
+**BH26 Microbes** (`bh26microbes`) was built for this BioHackathon by Shuichi Kawashima and Yoko
+Okabeppu, and has not yet been publicly announced. It holds KofamScan
 [@usesMethodIn:Aramaki2020kofamkoala] KEGG Orthology (KO) assignments, each with its HMM score,
 E-value, profile threshold and significance, for 57,612,257 RefSeq
 [@citesAsDataSource:OLeary2016refseq] proteins across 23,434 prokaryotic genome assemblies. It is the
@@ -381,7 +397,7 @@ discovery would return nothing. The hand-written vocabulary (4 classes, 44 prope
 its comments, for example that `lotus:ncbiTaxonId` reaches only 78.0% of organisms, and a test fails if
 the converter emits a property the vocabulary does not define.
 
-[TODO: status of the hosting discussion with RDF Portal.]
+Shuichi Kawashima is curating the converted graph for RDF Portal. [TODO: hosting status as of 19 September.]
 
 # Community, use cases and skills
 
@@ -482,8 +498,9 @@ itself rather than with upstream releases.
 We thank the organisers of the DBCLS BioHackathon 2026 and the Database Center for Life Science for
 hosting the event in Matsuyama. We thank the maintainers of RDF Portal, TogoID, PubCaseFinder and the
 external SPARQL endpoints used here, the participants who registered interest in the TogoMCP group
-(Daniel Puthawala, Mayumi Kamada, Susumu Goto, Núria QR, Naoya Yoshikuwa, Claude Nanjo, Toyofumi
-Fujiwara, Yasuhiro Tanizawa and Danil Ezhov), and everyone who answered our ideas form. TogoMCP is
+(Daniel Puthawala, Mayumi Kamada, Susumu Goto, Núria QR, Naoya Yoshikuwa, Claude Nanjo,
+Yasuhiro Tanizawa and Danil Ezhov), and everyone who answered our ideas form. We thank
+Egon Willighagen for his advice on LOTUS. TogoMCP is
 developed under contract with DBCLS. [TODO: funding lines.]
 
 # References

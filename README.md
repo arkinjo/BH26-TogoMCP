@@ -65,5 +65,6 @@ URL into the [BioHackrXiv preview service](http://preview.biohackrxiv.org/).
 
 ## License
 
-The preprint will be submitted to BioHackrXiv under CC BY 4.0. [TODO: replace the template's CC0
-`LICENSE` file before submission.]
+The text of this report is licensed under the
+[Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/)
+(CC BY 4.0); see [`LICENSE`](LICENSE).

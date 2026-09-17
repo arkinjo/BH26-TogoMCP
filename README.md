@@ -1,102 +1,69 @@
-# BioHackrXiv Publication Template
+# DBCLS BioHackathon 2026 report: TogoMCP
 
-Minimal example of a [BioHackrXiv](https://biohackrxiv.org/) publication that can be generated with the
-[Preview Service](http://preview.biohackrxiv.org/).
+This repository holds the [BioHackrXiv](https://biohackrxiv.org/) preprint of the **TogoMCP** hacking
+group at the [DBCLS BioHackathon 2026](https://2026.biohackathon.org/) (BH26JP, 13–19 September 2026,
+Matsuyama, Japan).
 
-## Step 1: Clone this Template Repository
+**Working title:** Extending TogoMCP beyond RDF Portal while making its schema guides check their own
+answers
 
-This repository is a template repository. This means that you can hit the green "Use this template"
-button (after logging in) to use it as a template to start a new BioHackrXiv Publication:
+* Latest PDF: [`paper/paper.pdf`](paper/paper.pdf) (rebuilt automatically on every push to `main`)
+* Manuscript source: [`paper/paper.md`](paper/paper.md)
+* References: [`paper/paper.bib`](paper/paper.bib)
 
-![Screenshot of the green "Use this template" button.](paper/use-this-template.png)
+**Status:** draft. Author list and several sections (marked `[TODO]`) are still open.
+[TODO: submission deadline]
 
-Note: after you have cloned this template, you are expected to change the license to match that
-of your preprint, allowing you to submit the preprint as CC-BY to BioHackrXiv.
+## About TogoMCP
 
-## Step 2: Configuring the Markdown
+[TogoMCP](https://github.com/dbcls/togomcp) is a Model Context Protocol (MCP) server that lets LLM
+agents query life-science knowledge graphs through SPARQL, guided by per-database schema documents
+(MIE files). The public server runs at <https://togomcp.rdfportal.org/>. The report covers TogoMCP
+releases v2.12.2 to v2.17.0 and the work done during the BioHackathon week.
 
-The publication Markdown is found in the `paper/paper.md` file. At the top you can edit the
-YAML code with metadata. It is important to get this part correct, because otherwise the PDF
-generation will fail. The metadata looks like this:
+## For collaborators
+
+### Adding, correcting or removing your name
+
+Authors are listed in the YAML front matter at the top of `paper/paper.md`. Please edit your own
+entry:
 
 ```yaml
-title: 'BioHackEU22 Report for Project 26: Shedding the light on unknown chemical substances'
-title_short: 'BioHackEU22 #26: unknown chemical substances'
-tags:
-  - cheminformatics
-  - PubChem
-  - unknown chemical substances
 authors:
-  - name: Egon Willighagen
-    orcid: 0000-0001-7542-0286
-    affiliation: 1
-  - name: Obligatory Second Author
-    affiliation: 1
+  - name: Your Name
+    orcid: 0000-0000-0000-0000        # optional but encouraged
+    affiliation: 2                    # index into the affiliations list below
+    role: Software, Validation        # CRediT terms, see https://credit.niso.org/
 affiliations:
-  - name: Dept of Bioinformatics - BiGCaT, NUTRIM, FHML, Maastricht University, Maastricht, NL
-    ror: 02jz4aj89
-    index: 1
-date: 7 November 2022
-cito-bibliography: paper.bib
-event: BH22EU
-biohackathon_name: "BioHackathon Europe 2022"
-biohackathon_url:   "https://biohackathon-europe.org/"
-biohackathon_location: "Paris, France, 2022"
-group: Unknown chemical substances group
-# URL to project git repo --- should contain the actual paper.md:
-git_url: https://github.com/biohackrxiv/publication-template
-# This is the short authors description that is used at the
-# bottom of the generated paper (typically the first two authors):
-authors_short: Egon Willighagen \emph{et al.}
+  - name: Your Institute, City, Country
+    ror: 00xxxxx00                    # optional, see https://ror.org/
+    index: 2
 ```
 
-### Which metadata to update?
+* If your affiliation is shown as `[TO BE CONFIRMED]`, please replace it.
+* If you would rather not be an author, delete your entry (we will thank you in the
+  Acknowledgements instead).
+* If you stay on the list, please add a sentence or two in the text about what you did during the
+  week, for example under "Community, use cases and skills". Authorship should reflect a contribution.
 
-#### To change
+### Editing the text
 
-The following fields should be changed:
+* Open a pull request, or push to `main` if you have write access. Each pull request gets a PDF
+  preview (see the "Actions" tab, artifact `paper`).
+* Search for `[TODO` to find open items.
+* BioHackrXiv conventions: at most two heading levels, no footnotes, abbreviations defined at first
+  use, and about 10 pages including references. The draft uses British spelling.
+* Add references to `paper/paper.bib` and cite them with a CiTO intent, for example
+  `[@usesDataFrom:Key]` or `[@citesAsAuthority:Key]`. See the
+  [BioHackrXiv guide](https://guide.biohackrxiv.org/) for the list of intents.
 
-* title
-* title_short
-* tags
-* authors (name and optionally their ORCID identifier)
-* affiliations
-* date
-* group
-* authors_short
+## Building the PDF
 
-Particularly important to update is the following field, which should point to
-your clone of the template, instead of the template itself:
+The GitHub Action in `.github/workflows/gen_pdf.yaml` builds `paper/paper.pdf` with the official
+BioHackrXiv generator and commits it back on every push to `main`. You can also paste the repository
+URL into the [BioHackrXiv preview service](http://preview.biohackrxiv.org/).
 
-* git_url: https://github.com/biohackrxiv/publication-template
+## License
 
-#### Only update for other BioHackathons
-
-The following fields should only be changed if you are not writing for the BioHackathon Europe 2022:
-
-* event: BH22EU
-* biohackathon_name: "BioHackathon Europe 2022"
-* biohackathon_url:   "https://biohackathon-europe.org/"
-* biohackathon_location: "Paris, France, 2022"
-
-## Step 3: Writing the article
-
-A full Markdown example is given in [paper/paper.md](paper/paper.md). This includes instructions how to include
-figures, tables, and annotate citations with the Citation Typing Ontology.
-
-## Step 4: Previewing the paper as PDF
-
-This repository can be converted into a preview PDF with BioHackrXiv [Preview Server](http://preview.biohackrxiv.org/).
-The preview website asks for the link to your repository and will automatically find the `paper.md` and create an PDF.
-
-## Troubleshooting
-
-### The first page is badly formatted
-
-Sometimes the list of authors plus affiliations runs over the page. We are working on a fix, but in the mean time you can try to shorten the affiliations. If that does not work move the affiliations into a repo and put the affiliations on a web page and use something like
-
-```yaml
-affiliations:
-  - name: For remaining affiliations see \url{https://github.com/project/etc} \vspace{0.2in}
-    index: \*
-```
+The preprint will be submitted to BioHackrXiv under CC BY 4.0. [TODO: replace the template's CC0
+`LICENSE` file before submission.]

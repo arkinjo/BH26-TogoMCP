@@ -408,8 +408,16 @@ Shuichi Kawashima is curating the converted graph for RDF Portal. [TODO: hosting
 four of the seven new databases (WikiPathways, IDSM, LIPID MAPS and SwissLipids) with the `mie-generator`
 skill, the MIE specification and the CI checkers. Review still caught errors that tooling could not,
 such as an example that named the wrong endpoint and would have returned 0 rows if followed literally.
+
 [TODO: K.N.'s account of the process: time per database, and what the skill and specification did not
 cover.]
+
+The [mie-generator skill](https://github.com/dbcls/togomcp/blob/main/.claude/skills/mie-generator/SKILL.md)
+skill was executed for each of the following endpoints to generate the corresponding MIE files:
+-	https://sparql.wikipathways.org/sparql
+-	https://idsm.elixir-czech.cz/sparql/endpoint/idsm
+-	https://lipidmaps.org/sparql
+-	https://beta.sparql.swisslipids.org/sparql
 
 **Ideas from participants.** We circulated a form asking for databases with SPARQL endpoints to add,
 general improvements, and use cases where an MCP-based approach makes sense compared with alternatives.

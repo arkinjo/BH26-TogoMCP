@@ -600,6 +600,12 @@ hosting the event in Matsuyama. We thank the maintainers of RDF Portal, TogoID, 
 external SPARQL endpoints used here, the participants who registered interest in the TogoMCP group
 (Daniel Puthawala, Mayumi Kamada, Susumu Goto, Núria QR, Naoya Yoshikuwa, Claude Nanjo
 and Danil Ezhov). We thank Egon Willighagen for his advice on LOTUS. TogoMCP is
-developed under contract with DBCLS. [TODO: funding lines.]
+developed under contract with DBCLS.
+
+## Funding
+
+This work was supported by the MEXT National Life Science Database Project (NLDP) (grant number
+JPNLDP202401) and the Life Science Database Integration Project, NBDC of Japan Science and Technology
+Agency.
 
 # References

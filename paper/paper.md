@@ -494,9 +494,6 @@ measure, competing explanations considered, fell from 74% to 50%, which its auth
 regression rather than leaving out. Agents called both servers within the same run, a mean of 7.8
 TogoCX calls against 9.2 TogoMCP calls. TogoCX is a research prototype.
 
-**Validation.** Y.M. and P.J. tested the server and the new MIE files over the course of the week.
-[TODO: what each of them checked, and what it turned up.]
-
 **Ideas from participants.** P.J. built and circulated a form asking for databases with SPARQL endpoints
 to add, general improvements, and use cases where an MCP-based approach makes sense compared with
 alternatives. It drew no responses. The databases added this week therefore came from the group's own

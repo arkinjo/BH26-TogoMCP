@@ -404,9 +404,6 @@ tool uses the path the PubCaseFinder web application calls. DBCLS caps API use a
 minute, 100 per hour and 1,000 per day for the whole server, so the tools cache results and refuse
 with an explanatory error rather than exceed the quota.
 
-[TODO: a short worked example (phenotypes, then ranked diseases, then case reports), possibly in
-collaboration with the ZebraSeek group, which also builds on PubCaseFinder.]
-
 # Fixes driven by real usage
 
 ## Production call logs
@@ -470,9 +467,6 @@ the first MIE written by the maintainer of the database it describes rather than
 it. Review still caught what tooling could not, such as an example that named the wrong endpoint and
 would have returned 0 rows if followed literally.
 
-[TODO: K.N.'s account of the process: time per database, and what the skill and specification did not
-cover.]
-
 The [mie-generator skill](https://github.com/dbcls/togomcp/blob/main/.claude/skills/mie-generator/SKILL.md)
 skill was executed for each of the following endpoints to generate the corresponding MIE files:
 -	https://sparql.wikipathways.org/sparql
@@ -515,9 +509,6 @@ tool list does not yet show `get_workflow`. Serving skills centrally means that 
 inside them, of the same kind as MIE gotchas, are corrected for every user at once. Developer-facing
 skills (`mie-generator`, `qa-generator`) are reachable by neither route. The handbook and tutorial now
 tell readers that the skills come with the connection, so local installation is optional.
-
-[TODO: contributions of other group members (use cases, database proposals, SPARQL example
-review).]
 
 # Discussion
 
@@ -583,7 +574,7 @@ itself rather than with upstream releases.
 * Promote BH26 Microbes out of experimental status once the dataset's shape is settled.
 * Align MIE examples with community SPARQL example collections.
 * Onboard more MIE authors, especially among database maintainers, and follow up databases proposed by
-  neighbouring BH26 groups that are building RDF or MCP interfaces. [TODO: keep only concrete follow-ups.]
+  neighbouring BH26 groups that are building RDF or MCP interfaces.
 
 # Software and data availability
 

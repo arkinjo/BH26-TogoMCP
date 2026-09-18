@@ -15,47 +15,48 @@ authors:
     affiliation: 1
     role: Conceptualization, Software, Data curation, Writing – original draft
   - name: Kozo Nishida
-    affiliation: 5
+    orcid: 0000-0001-8501-7319
+    affiliation: 2
     role: Data curation, Software, Validation
   - name: Shuichi Kawashima
     orcid: 0000-0001-7883-3756
-    affiliation: 2
+    affiliation: 3
     role: Data curation, Resources
   - name: Yuki Moriya
     orcid: 0000-0001-8195-5893
-    affiliation: 2
+    affiliation: 3
   - name: Takatomo Fujisawa
     orcid: 0000-0001-8978-3344
-    affiliation: 3
-  - name: Priscilla Joanne
-    affiliation: 6
-  - name: Yoko Okabeppu
     affiliation: 4
+  - name: Priscilla Joanne
+    affiliation: 5
+  - name: Yoko Okabeppu
+    affiliation: 6
     role: Data curation, Resources
   - name: Shuya Ikeda
     orcid: 0000-0002-1357-5159
-    affiliation: 2
+    affiliation: 3
     role: Software, Resources
   - name: Toyofumi Fujiwara
     orcid: 0000-0002-0170-9172
-    affiliation: 2
+    affiliation: 3
     role: Software, Resources
   - name: Yasunori Yamamoto
     orcid: 0000-0002-6943-6887
-    affiliation: 2
+    affiliation: 3
     role: Conceptualization, Resources, Writing – review & editing
 affiliations:
   - name: Anima Machina G.K., Osaka, Japan
     index: 1
-  - name: Database Center for Life Science (DBCLS), Research Organization of Information and Systems, Japan
+  - name: RIKEN Center for Biosystems Dynamics Research, Kobe, Japan
     index: 2
-  - name: Bioinformation and DDBJ Center, National Institute of Genetics, Research Organization of Information and Systems, Mishima, Japan
+  - name: Database Center for Life Science (DBCLS), Research Organization of Information and Systems, Japan
     index: 3
-  - name: OKBP, Inc., Yokohama, Japan
+  - name: Bioinformation and DDBJ Center, National Institute of Genetics, Research Organization of Information and Systems, Mishima, Japan
     index: 4
-  - name: RIKEN Center for Biosystems Dynamics Research, Japan
-    index: 5
   - name: Department of Computational Biology and Medical Sciences, Graduate School of Frontier Sciences, The University of Tokyo, Japan
+    index: 5
+  - name: OKBP, Inc., Yokohama, Japan
     index: 6
 date: 19 September 2026
 cito-bibliography: paper.bib

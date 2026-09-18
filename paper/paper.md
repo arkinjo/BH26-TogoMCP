@@ -501,7 +501,10 @@ measure, competing explanations considered, fell from 74% to 50%, which its auth
 regression rather than leaving it out. Agents called both servers within the same run, a mean of 7.8
 TogoCX calls against 9.2 TogoMCP calls. TogoCX is a research prototype.
 
-**Ideas from participants.** Priscilla Joanne built and circulated a form asking for databases
+**Broad-knowledge evaluation.** Priscilla Joanne evaluated TogoMCP on BioASQ Task 13b, an expert-curated biomedical question-answering benchmark, to test broad biomedical knowledge alongside the specific data-retrieval use cases for which TogoMCP is designed.
+Across the 82 yes/no, 95 factoid and 83 list questions, TogoMCP showed no statistically significant decrease in performance relative to the baseline. Further work is needed to turn this into an improvement on broad benchmark questions, but the evaluation supports TogoMCP's value for more specific tasks that require retrieving data from life-science resources.
+
+**Ideas from participants.** Priscilla Joanne also built and circulated a form asking for databases
 with SPARQL endpoints to add, general improvements, and use cases where an MCP-based approach
 makes sense compared with alternatives. It drew no responses. The databases added this week
 therefore came from the group's own proposals and from conversations at the venue, which is worth

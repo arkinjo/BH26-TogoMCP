@@ -25,6 +25,7 @@ authors:
   - name: Yuki Moriya
     orcid: 0000-0001-8195-5893
     affiliation: 3
+    role: Software, Validation
   - name: Takatomo Fujisawa
     orcid: 0000-0001-8978-3344
     affiliation: 4
@@ -34,6 +35,7 @@ authors:
     role: Data curation, Resources
   - name: Priscilla Joanne
     affiliation: 5
+    role: Validation, Investigation
   - name: Yoko Okabeppu
     affiliation: 6
     role: Data curation, Resources
@@ -78,28 +80,32 @@ authors_short: Akira R. Kinjo \emph{et al.}
 
 # Abstract
 
-TogoMCP is a Model Context Protocol (MCP) server that lets large language model (LLM) agents
-query life-science knowledge graphs in SPARQL, guided by per-database schema documents called
-MIE (Metadata Interoperability Exchange) files. During the DBCLS BioHackathon 2026 (BH26), the
-TogoMCP group set out to extend the server, refine the MIE files, add databases, learn what makes
-a good SPARQL example, and turn use cases into reusable agent skills. In the first six days of the event we
-published ten releases (v2.12.2 to v2.20.0) and grew the catalogue from 37 to 45 databases: Fanta.bio,
-WikiPathways, IDSM, PubCaseFinder, LIPID MAPS, SwissLipids and MarpolBase, plus BH26 Microbes, an
-experimental dataset of KEGG Orthology assignments for 57.6 million prokaryotic proteins built for the
-BioHackathon. Five of them are served from endpoints outside RDF Portal and one from a QLever engine
-rather than Virtuoso, and they broke assumptions the rest of the corpus had taught, such as named-graph
-pinning, federation with `SERVICE`, literal typing, and even that a result set is complete. For the first time, MIE files
-were written by a second author. We made every worked example in the MIE corpus (now 420) assert
-its recorded result against the live endpoint in continuous integration. The first full comparison
-found drift that execution-only checks had missed, most seriously a NANDO release that made an
-example join silently miss about 88% of mapped diseases. Onboarding the new databases uncovered a
-series of quantified "silent wrong answers", queries that return plausible results rather than errors,
+TogoMCP is a Model Context Protocol (MCP) server that lets large language model (LLM) agents query
+life-science knowledge graphs in SPARQL, guided by per-database schema documents called MIE
+(Metadata Interoperability Exchange) files. During the DBCLS BioHackathon 2026 (BH26), the TogoMCP
+group set out to extend the server, refine the MIE files, add databases, learn what makes a good
+SPARQL example, and turn use cases into reusable agent skills. In the first six days of the event we
+published ten releases (v2.12.2 to v2.20.0) and grew the catalogue from 37 to 45 databases:
+Fanta.bio, WikiPathways, IDSM, PubCaseFinder, LIPID MAPS, SwissLipids and MarpolBase, plus BH26
+Microbes, an experimental dataset of KEGG Orthology assignments for 57.6 million prokaryotic
+proteins built for the BioHackathon. Five of them are served from endpoints outside RDF Portal and
+one from a QLever engine rather than Virtuoso, and they broke assumptions the rest of the corpus had
+taught, such as named-graph pinning, federation with `SERVICE`, literal typing, and even that a
+result set is complete. For the first time, MIE files were written by people other than the server's
+maintainer, one of them by the maintainer of the database it describes, and a second group member
+built TogoCX, a companion MCP server that returns database edges with instructions on how their
+claims may be stated. We made every worked example in the MIE corpus (now 420) assert its recorded
+result against the live endpoint in continuous integration. The first full comparison found drift
+that execution-only checks had missed, most seriously a NANDO release that made an example join
+silently miss about 88% of mapped diseases. Onboarding the new databases uncovered a series of
+quantified "silent wrong answers", queries that return plausible results rather than errors,
 including a category count inflated 3.1-fold by an upstream data defect and a gene enumeration that
-returns 10,000 of 18,080 rows without an error or a warning. We also added two
-PubCaseFinder tools for phenotype-driven rare-disease diagnosis support, began serving analysis
-workflows (agent skills) from the server, fixed failure modes found in production call logs, made TogoID errors suggest working conversion routes, and prepared a
-LOTUS natural-products graph for hosting on RDF Portal. We argue that for LLM-facing schema
-documentation, "the example still runs" is not evidence that it is still correct.
+returns 10,000 of 18,080 rows without an error or a warning. We also added two PubCaseFinder tools
+for phenotype-driven rare-disease diagnosis support, began serving analysis workflows (agent skills)
+from the server, fixed failure modes found in production call logs, made TogoID errors suggest
+working conversion routes, and prepared a LOTUS natural-products graph for hosting on RDF Portal. We
+argue that for LLM-facing schema documentation, "the example still runs" is not evidence that it is
+still correct.
 
 **Keywords:** TogoMCP; Model Context Protocol; SPARQL; RDF; knowledge graphs; LLM agents;
 schema documentation
@@ -451,14 +457,18 @@ discovery would return nothing. The hand-written vocabulary (4 classes, 44 prope
 its comments, for example that `lotus:ncbiTaxonId` reaches only 78.0% of organisms, and a test fails if
 the converter emits a property the vocabulary does not define.
 
-Shuichi Kawashima is curating the converted graph for RDF Portal. [TODO: hosting status as of 19 September.]
+Shuichi Kawashima is curating the converted graph for RDF Portal, which plans to host it after
+the BioHackathon.
 
 # Community, use cases and skills
 
-**A second MIE author.** K.N. became the first person other than A.R.K. to write MIE files, contributing
-four of the eight new databases (WikiPathways, IDSM, LIPID MAPS and SwissLipids) with the `mie-generator`
-skill, the MIE specification and the CI checkers. Review still caught errors that tooling could not,
-such as an example that named the wrong endpoint and would have returned 0 rows if followed literally.
+**New MIE authors.** Until this week every MIE file had been written by A.R.K. Two other people
+wrote them during BH26. K.N. contributed four of the eight new databases (WikiPathways, IDSM, LIPID
+MAPS and SwissLipids), working from the `mie-generator` skill, the MIE specification and the CI
+checkers. Y.T. wrote the MarpolBase file, which needed only light revision afterwards, and which is
+the first MIE written by the maintainer of the database it describes rather than by a consumer of
+it. Review still caught what tooling could not, such as an example that named the wrong endpoint and
+would have returned 0 rows if followed literally.
 
 [TODO: K.N.'s account of the process: time per database, and what the skill and specification did not
 cover.]
@@ -470,9 +480,28 @@ skill was executed for each of the following endpoints to generate the correspon
 -	https://lipidmaps.org/sparql
 -	https://beta.sparql.swisslipids.org/sparql
 
-**Ideas from participants.** We circulated a form asking for databases with SPARQL endpoints to add,
-general improvements, and use cases where an MCP-based approach makes sense compared with alternatives.
-[TODO: summarise responses.]
+**A companion server.** Y.M. built TogoCX during the week: an MCP server meant to run alongside
+TogoMCP rather than replace it. Where TogoMCP hands an agent a schema guide and general SPARQL
+access, TogoCX returns database edges with reading instructions attached: how the direction of each
+edge may be stated (as `data`, `measured`, `assumed` or `undetermined`), what the relation may and
+must not be used to claim, whether the record states the answer itself, and which queries ran, with
+their row counts and the reasons the others did not. It targets a failure the MIE files do not
+address. The problem is rarely that data is missing; it is that the data found does not say what the
+agent then writes down, as when free text is recorded as a structured field or an answer is used to
+explain itself. Over four shared cases, adding TogoCX raised gold records recovered from 82% to 95%
+and cut the share of rows resting on an answer-bearing record from 79% to 64%, while a third
+measure, competing explanations considered, fell from 74% to 50%, which its author reports as a
+regression rather than leaving out. Agents called both servers within the same run, a mean of 7.8
+TogoCX calls against 9.2 TogoMCP calls. TogoCX is a research prototype.
+
+**Validation.** Y.M. and P.J. tested the server and the new MIE files over the course of the week.
+[TODO: what each of them checked, and what it turned up.]
+
+**Ideas from participants.** P.J. built and circulated a form asking for databases with SPARQL endpoints
+to add, general improvements, and use cases where an MCP-based approach makes sense compared with
+alternatives. It drew no responses. The databases added this week therefore came from the group's own
+proposals and from conversations at the venue, which is worth recording: at an event where everyone is
+already deep in their own project, a form competes badly with a hallway conversation.
 
 **Skills.** At the mid-term report we showed the `research-article-analysis` skill, which validates a
 paper's claims about compounds, reactions, pathways and protein functions against ChEBI, Rhea, UniProt,
@@ -490,7 +519,7 @@ inside them, of the same kind as MIE gotchas, are corrected for every user at on
 skills (`mie-generator`, `qa-generator`) are reachable by neither route. The handbook and tutorial now
 tell readers that the skills come with the connection, so local installation is optional.
 
-[TODO: contributions of other group members (use cases, database proposals, testing, SPARQL example
+[TODO: contributions of other group members (use cases, database proposals, SPARQL example
 review).]
 
 # Discussion
@@ -501,8 +530,8 @@ Table: Objectives of the TogoMCP group and corresponding outcomes.
 
 | Objective | Outcome |
 |---|---|
-| Extend and enhance TogoMCP | 10 releases; PubCaseFinder tools; TogoID route suggestions; server-side workflows; log-driven fixes |
-| Examine and refine MIE files | result assertions over 420 examples; NANDO, GO, ChEBI, UniProt and LIPID MAPS corrections |
+| Extend and enhance TogoMCP | 10 releases; PubCaseFinder tools; TogoID route suggestions; server-side workflows; log-driven fixes; TogoCX companion server |
+| Examine and refine MIE files | two new MIE authors; result assertions over 420 examples; NANDO, GO, ChEBI, UniProt and LIPID MAPS corrections |
 | Use cases and workflows into skills | `research-article-analysis` demonstration; three public workflows served by `get_workflow` (2.18.0) |
 | How to make good SPARQL examples | see below |
 | Add new databases | 37 to 45 databases (one an experimental BH26 dataset), 5 on external endpoints and 1 on QLever; LOTUS conversion prepared |
@@ -511,6 +540,13 @@ Table: Objectives of the TogoMCP group and corresponding outcomes.
 returns a plausible wrong answer is not. Every trap in Table 2 would pass a test that only checks that
 a query runs and returns rows. Quantifying each trap and attaching a re-runnable check is what lets the
 documentation survive upstream releases, as the NANDO case shows.
+
+**A database's own maintainer can write its MIE.** The MarpolBase file was written by the person who
+maintains the database, and needed only light revision in review. That matters more than one file's
+arithmetic. The expensive part of onboarding is knowing where a database returns a plausible wrong
+answer, and the people who hold that knowledge are the ones who built the resource; if the format is
+legible enough for them to write in, the cost of the corpus stops scaling with the time of the team
+that maintains the server.
 
 **Rules learned on one platform do not transfer.** Guidance that was true across RDF Portal (pin the
 graph, federate with `SERVICE`, beware of literal typing) became endpoint-specific once databases
@@ -549,14 +585,15 @@ itself rather than with upstream releases.
 * Measure use of `get_workflow` from the call logs.
 * Promote BH26 Microbes out of experimental status once the dataset's shape is settled.
 * Align MIE examples with community SPARQL example collections.
-* Onboard more MIE authors, and follow up databases proposed by participants and by neighbouring BH26
-  groups that are building RDF or MCP interfaces. [TODO: keep only concrete follow-ups.]
+* Onboard more MIE authors, especially among database maintainers, and follow up databases proposed by
+  neighbouring BH26 groups that are building RDF or MCP interfaces. [TODO: keep only concrete follow-ups.]
 
 # Software and data availability
 
 * TogoMCP source code: <https://github.com/dbcls/togomcp> (releases v2.12.2 to v2.20.0; MIT License).
 * Public TogoMCP server: <https://togomcp.rdfportal.org/>.
 * LOTUS converter and vocabulary: `scripts/lotus/` in the TogoMCP repository.
+* TogoCX: <https://github.com/moriya-dbcls/togocx-mcp>.
 * This report: <https://github.com/arkinjo/BH26-TogoMCP>.
 
 ## Acknowledgements
@@ -565,8 +602,7 @@ We thank the organisers of the DBCLS BioHackathon 2026 and the Database Center f
 hosting the event in Matsuyama. We thank the maintainers of RDF Portal, TogoID, PubCaseFinder and the
 external SPARQL endpoints used here, the participants who registered interest in the TogoMCP group
 (Daniel Puthawala, Mayumi Kamada, Susumu Goto, Núria QR, Naoya Yoshikuwa, Claude Nanjo
-and Danil Ezhov), and everyone who answered our ideas form. We thank
-Egon Willighagen for his advice on LOTUS. TogoMCP is
+and Danil Ezhov). We thank Egon Willighagen for his advice on LOTUS. TogoMCP is
 developed under contract with DBCLS. [TODO: funding lines.]
 
 # References

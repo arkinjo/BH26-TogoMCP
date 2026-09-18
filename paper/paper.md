@@ -155,7 +155,9 @@ community-curated pathways with signed, directed interactions. **IDSM**
 [@citesAsDataSource:Galgonek2021idsm] is the first database in the catalogue that searches by chemical
 structure: its Sachem extension [@usesMethodIn:Kratochvil2018sachem; @usesMethodIn:Kratochvil2019idsm]
 turns one SMILES string into the molecule's identifiers in PubChem, ChEMBL, ChEBI, Wikidata,
-DrugBank and four other datasets. **PubCaseFinder** [@citesAsDataSource:Fujiwara2018pubcasefinder]
+DrugBank and four other datasets. Additionally, in 2024, IDSM was extended to integrate mass spectrometry
+databases, allowing for SPARQL queries based on mass spectral similarity [@citesAsDataSource:Galgonek2024idsm].
+**PubCaseFinder** [@citesAsDataSource:Fujiwara2018pubcasefinder]
 contributes the knowledge base behind DBCLS's rare-disease diagnosis support, including
 text-mined disease–phenotype annotations based on the HPO [@citesAsDataSource:Gargano2024hpo].
 **LIPID MAPS** [@citesAsDataSource:Conroy2024lipidmaps] is the only resource here that resolves the

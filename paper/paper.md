@@ -56,7 +56,7 @@ affiliations:
     index: 1
   - name: RIKEN Center for Biosystems Dynamics Research, Kobe, Japan
     index: 2
-  - name: Database Center for Life Science (DBCLS), Research Organization of Information and Systems, Japan
+  - name: Database Division for Life Science, BioData Science Initiative (BSI), National Institute of Genetics, Research Organization of Information and Systems, Chiba, Japan
     index: 3
   - name: Bioinformation and DDBJ Center, National Institute of Genetics, Research Organization of Information and Systems, Mishima, Japan
     index: 4

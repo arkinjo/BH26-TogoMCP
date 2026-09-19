@@ -505,9 +505,11 @@ TogoCX calls against 9.2 TogoMCP calls. TogoCX is a research prototype.
 [@usesMethodIn:Tsatsaronis2015bioasq], an expert-curated biomedical question-answering benchmark,
 to test broad biomedical knowledge alongside the specific data-retrieval use cases for which
 TogoMCP is designed. Across the 82 yes/no, 95 factoid and 83 list questions, TogoMCP showed no
-statistically significant decrease in performance relative to the baseline, the same agent
-equipped with web search but without TogoMCP attached. Further work is needed to turn this into an
-improvement on broad benchmark questions, but the evaluation supports TogoMCP's value for more
+statistically significant decrease in performance relative to the baseline, the same agent with
+web search in place of TogoMCP: search is disabled when TogoMCP is attached, so the two are
+substituted for one another rather than combined, and the comparison is between two retrieval
+routes rather than between having a tool and having none. Further work is needed to turn this into
+an improvement on broad benchmark questions, but the evaluation supports TogoMCP's value for more
 specific tasks that require retrieving data from life-science resources.
 
 **Ideas from participants.** Priscilla Joanne also built and circulated a form asking for databases

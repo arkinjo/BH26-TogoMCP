@@ -4,15 +4,16 @@ This repository holds the [BioHackrXiv](https://biohackrxiv.org/) preprint of th
 group at the [DBCLS BioHackathon 2026](https://2026.biohackathon.org/) (BH26JP, 13–19 September 2026,
 Matsuyama, Japan).
 
-**Working title:** Extending TogoMCP beyond RDF Portal while making its schema guides check their own
+**Title:** Extending TogoMCP beyond RDF Portal while making its schema guides check their own
 answers
+
+**Published preprint:** <https://doi.org/10.37044/osf.io/t25ng_v2>
 
 * Latest PDF: [`paper/paper.pdf`](paper/paper.pdf) (rebuilt automatically on every push to `main`)
 * Manuscript source: [`paper/paper.md`](paper/paper.md)
 * References: [`paper/paper.bib`](paper/paper.bib)
 
-**Status:** draft. Author list and several sections (marked `[TODO]`) are still open.
-[TODO: submission deadline]
+**Status:** published (version 2 of the BioHackrXiv preprint).
 
 ## About TogoMCP
 
@@ -21,40 +22,28 @@ agents query life-science knowledge graphs through SPARQL, guided by per-databas
 (MIE files). The public server runs at <https://togomcp.rdfportal.org/>. The report covers TogoMCP
 releases v2.12.2 to v2.17.0 and the work done during the BioHackathon week.
 
-## For collaborators
+## Citing this report
 
-### Adding, correcting or removing your name
+Kinjo, A. R. *et al.* Extending TogoMCP beyond RDF Portal while making its schema guides check
+their own answers. BioHackrXiv (2026). <https://doi.org/10.37044/osf.io/t25ng_v2>
 
-Authors are listed in the YAML front matter at the top of `paper/paper.md`. Please edit your own
-entry:
+Author names, ORCIDs, affiliations and CRediT roles are recorded in the YAML front matter of
+[`paper/paper.md`](paper/paper.md), and are fixed as of the published version.
 
-```yaml
-authors:
-  - name: Your Name
-    orcid: 0000-0000-0000-0000        # optional but encouraged
-    affiliation: 2                    # index into the affiliations list below
-    role: Software, Validation        # CRediT terms, see https://credit.niso.org/
-affiliations:
-  - name: Your Institute, City, Country
-    ror: 00xxxxx00                    # optional, see https://ror.org/
-    index: 2
-```
+## Corrections and new versions
 
-* If your affiliation is shown as `[TO BE CONFIRMED]`, please replace it.
-* If you would rather not be an author, delete your entry (we will thank you in the
-  Acknowledgements instead).
-* If you stay on the list, please add a sentence or two in the text about what you did during the
-  week, for example under "Community, use cases and skills". Authorship should reflect a contribution.
+The preprint is published, so `main` no longer tracks a draft. Changes to the text only reach
+readers when a new version is submitted to BioHackrXiv, which mints a new `_vN` DOI.
 
-### Editing the text
-
-* Open a pull request, or push to `main` if you have write access. Each pull request gets a PDF
+* For a correction, open a pull request rather than pushing to `main`. Each pull request gets a PDF
   preview (see the "Actions" tab, artifact `paper`).
-* Search for `[TODO` to find open items.
-* BioHackrXiv conventions: at most two heading levels, no footnotes, abbreviations defined at first
-  use, and about 10 pages including references. The draft uses British spelling.
-* Add references to `paper/paper.bib` and cite them with a CiTO intent, for example
-  `[@usesDataFrom:Key]` or `[@citesAsAuthority:Key]`. See the
+* Substantive changes — including any change to the author list — need the agreement of the
+  authors before a new version is submitted.
+* Once a new version is out, update the DOI at the top of this file and the status line.
+* BioHackrXiv conventions still apply: at most two heading levels, no footnotes, abbreviations
+  defined at first use, and about 10 pages including references. The text uses British spelling.
+* Add references to [`paper/paper.bib`](paper/paper.bib) and cite them with a CiTO intent, for
+  example `[@usesDataFrom:Key]` or `[@citesAsAuthority:Key]`. See the
   [BioHackrXiv guide](https://guide.biohackrxiv.org/) for the list of intents.
 
 ## Building the PDF
